@@ -1,7 +1,7 @@
 import os
 import logging
 
-from telegram import ForceReply, Update
+from telegram import ForceReply, Update, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 from dotenv import load_dotenv
 
@@ -23,13 +23,21 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
 
 
-
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text("Help!")
 
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(update.message.text)
+
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = [
+        [KeyboardButton('Hello'), KeyboardButton('World')],
+        [KeyboardButton('Good buy')],
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard)
+    await context.bot.send_message(chat_id=update.effective_chat.id, text='Im a bot', reply_markup=reply_markup)
 
 
 def main() -> None:
